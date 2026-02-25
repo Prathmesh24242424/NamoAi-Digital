@@ -67,36 +67,30 @@
             font-family: var(--font-body);
             overflow-x: hidden;
             line-height: 1.6;
-            padding-left: 300px;
-            transition: padding-left 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        body.nav-collapsed {
-            padding-left: 0;
-        }
 
         /* Nav Toggle Button */
         .nav-toggle {
+            display: none;
             position: fixed;
             top: 24px;
-            left: 324px;
+            right: 24px;
             width: 45px;
             height: 45px;
             background: rgba(2, 2, 9, 0.4);
             border: 1px solid var(--glass-border);
             border-radius: 50%;
             z-index: 1002;
-            display: flex;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(10px);
-            transition: left 0.4s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s, border-color 0.3s;
+            transition: background-color 0.3s, border-color 0.3s;
             pointer-events: auto;
             cursor: pointer !important;
         }
 
         body.nav-collapsed .nav-toggle {
-            left: 24px;
             background: rgba(2, 2, 9, 0.8);
         }
 
@@ -224,6 +218,7 @@
         .text-gradient {
             background: linear-gradient(to right, var(--primary-accent), var(--secondary-accent));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             display: inline-block;
         }
@@ -323,34 +318,36 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 300px;
-            height: 100vh;
-            padding: 50px 0;
-            z-index: 1000;
-            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s;
-            background: rgba(2, 2, 9, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-right: 1px solid var(--glass-border);
+            width: 100%;
+            padding: 24px 0;
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            background: transparent;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            border-bottom: 1px solid transparent;
             display: flex;
-            flex-direction: column;
-            transform: translateX(0);
+            align-items: center;
         }
 
         nav.collapsed {
-            transform: translateX(-100%);
+            transform: translateY(-100%);
         }
 
         nav.scrolled {
-            background: rgba(2, 2, 9, 0.8);
+            background: rgba(2, 2, 9, 0.85);
+            padding: 16px 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
         }
 
         .nav-container {
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: flex-start;
-            height: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            height: auto;
             padding: 0 40px;
             width: 100%;
         }
@@ -362,7 +359,7 @@
             letter-spacing: -0.5px;
             color: var(--text-primary);
             transition: var(--transition-smooth);
-            margin-bottom: 60px;
+            margin-bottom: 0;
         }
 
         .logo span {
@@ -375,10 +372,11 @@
 
         .nav-links {
             display: flex;
-            flex-direction: column;
-            gap: 30px;
-            width: 100%;
-            margin-bottom: auto;
+            flex-direction: row;
+            gap: 40px;
+            width: auto;
+            margin-bottom: 0;
+            align-items: center;
         }
 
         .nav-link {
@@ -411,18 +409,19 @@
         }
 
         .nav-container .btn {
-            width: 100%;
-            margin-top: 40px;
+            width: auto;
+            margin-top: 0;
+            padding: 12px 28px;
         }
 
         /* ====== HERO SECTION ====== */
-        #hero {
+        #home {
             position: relative;
             min-height: 100vh;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             overflow: hidden;
-            padding-top: 350px;
+            padding-top: 120px;
         }
 
         #particle-canvas {
@@ -601,6 +600,82 @@
             }
         }
 
+        /* ====== ABOUT SECTION ====== */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-img-wrapper {
+            position: relative;
+            padding: 20px;
+            aspect-ratio: 4 / 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .about-abstract {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(229, 231, 235, 0.1), rgba(156, 163, 175, 0.05)),
+                radial-gradient(circle at top right, rgba(229, 231, 235, 0.2), transparent 50%),
+                radial-gradient(circle at bottom left, rgba(156, 163, 175, 0.2), transparent 50%);
+            border-radius: 12px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-abstract::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            height: 60%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent, var(--primary-accent), var(--secondary-accent), transparent);
+            filter: blur(40px);
+            opacity: 0.5;
+            animation: spin 10s linear infinite;
+        }
+
+        .about-badge {
+            position: absolute;
+            bottom: -20px;
+            right: -20px;
+            background: rgba(2, 2, 9, 0.8);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            padding: 20px 30px;
+            border-radius: 15px;
+            z-index: 2;
+            text-align: center;
+            font-family: var(--font-accent);
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-list {
+            margin-bottom: 30px;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .about-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+
         /* ====== SERVICES SECTION ====== */
         .section-header {
             text-align: center;
@@ -730,6 +805,7 @@
             font-size: 2rem;
             background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
@@ -1105,20 +1181,63 @@
 
         /* RESPONSIVE DESIGN */
         @media (max-width: 1024px) {
-            body {
-                padding-left: 0 !important;
+            .nav-toggle {
+                display: flex !important;
             }
 
-            .nav-toggle {
-                left: 24px !important;
-                background: rgba(2, 2, 9, 0.8) !important;
+            nav.collapsed {
+                transform: translateY(0);
+                background: transparent;
+                backdrop-filter: blur(0px);
+                -webkit-backdrop-filter: blur(0px);
+                box-shadow: none;
+                padding: 24px 0;
+                border: none;
+            }
+
+            nav.collapsed.scrolled {
+                background: rgba(2, 2, 9, 0.85);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--glass-border);
+                padding: 16px 0;
+            }
+
+            nav:not(.collapsed) {
+                height: 100vh;
+                background: rgba(2, 2, 9, 0.98);
+                overflow-y: auto;
+            }
+
+            nav.collapsed .nav-links,
+            nav.collapsed .btn {
+                display: none;
             }
 
             nav {
                 background: rgba(2, 2, 9, 0.95);
-                box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(20px);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+                padding: 40px 0;
             }
 
+            .nav-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .logo {
+                align-self: flex-start;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 30px;
+                align-items: center;
+            }
+
+            .about-container,
             .why-container,
             .contact-container {
                 grid-template-columns: 1fr;
@@ -1213,6 +1332,7 @@
             <a href="#" class="logo"><span>N</span>amo AI Digital</a>
             <ul class="nav-links">
                 <li><a href="#home" class="nav-link hover-target">Home</a></li>
+                <li><a href="#about" class="nav-link hover-target">About</a></li>
                 <li><a href="#services" class="nav-link hover-target">Services</a></li>
                 <li><a href="#process" class="nav-link hover-target">Process</a></li>
                 <li><a href="#contact" class="nav-link hover-target">Contact</a></li>
@@ -1238,12 +1358,56 @@
                     Experiences That<br>
                     <span class="text-gradient">Matter.</span>
                 </h1>
-                <p class="hero-subtitle">From stunning websites to powerful apps â€” we engineer your brand's digital
+                <p class="hero-subtitle">From stunning websites to powerful apps &mdash; we engineer your brand's
+                    digital
                     future with cutting-edge technology and premium design.</p>
                 <div class="hero-cta">
                     <a href="#contact" class="btn btn-primary magnet-btn hover-target">Start Your Project &rarr;</a>
                     <a href="#services" class="btn btn-outline magnet-btn hover-target">View Our Work</a>
                 </div>
+            </div>
+        </div>
+    </section>
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section-padding">
+        <div class="container about-container">
+            <div class="about-image reveal-left">
+                <div class="glass-panel about-img-wrapper tilt-card hover-target" style="padding: 0;">
+                    <img src="about-image.png" alt="Namo AI Digital Development Workspace"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; z-index: 1;">
+                    <div class="about-badge">
+                        <span class="text-gradient"
+                            style="font-size: 2rem; font-weight: 800; font-family: var(--font-display);">5+</span><br>
+                        Years Experience
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-content reveal-right">
+                <div class="badge">Who We Are</div>
+                <h2 class="section-title" style="text-align: left; margin-bottom: 25px;">Pioneering the Future of <span
+                        class="text-gradient">Digital</span></h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 20px;">
+                    At Namo AI Digital, we blend cutting-edge technology with premium, aesthetic design to create
+                    digital experiences that don't just exist&mdash;they dominate. From stunning interfaces to highly
+                    scalable architectures, every pixel and every line of code is engineered for perfection.
+                </p>
+                <p style="color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px;">
+                    Our mission is simple: To transform ambitious brands into digital powerhouses. We don't settle for
+                    "good enough." We aim for extraordinary.
+                </p>
+
+                <ul class="about-list">
+                    <li><span class="text-gradient" style="font-size: 1.2rem;">&check;</span> Bleeding-edge Technology
+                    </li>
+                    <li><span class="text-gradient" style="font-size: 1.2rem;">&check;</span> Hyper-performance
+                        Architectures</li>
+                    <li><span class="text-gradient" style="font-size: 1.2rem;">&check;</span> Premium Aesthetic Design
+                    </li>
+                </ul>
+
+                <a href="#services" class="btn btn-outline magnet-btn hover-target" style="margin-top: 20px;">Discover
+                    Our Services &rarr;</a>
             </div>
         </div>
     </section>
@@ -1379,31 +1543,29 @@
                     success from concept to launch.</p>
             </div>
 
-            <div class="timeline reveal" id="timeline">
-                <div class="timeline-line" id="timeline-line"></div>
-
-                <div class="timeline-step">
+            <div class="timeline" id="timeline">
+                <div class="timeline-step reveal-right" style="transition-delay: 0.1s;">
                     <div class="step-number">01</div>
                     <h3 class="step-title">Discovery</h3>
                     <p class="step-desc">We start by deeply understanding your business goals, target audience, and
                         market landscape.</p>
                 </div>
 
-                <div class="timeline-step">
+                <div class="timeline-step reveal-right" style="transition-delay: 0.2s;">
                     <div class="step-number">02</div>
                     <h3 class="step-title">Design</h3>
                     <p class="step-desc">Creating wireframes and premium UI/UX designs that visually communicate your
                         brand identity.</p>
                 </div>
 
-                <div class="timeline-step">
+                <div class="timeline-step reveal-right" style="transition-delay: 0.3s;">
                     <div class="step-number">03</div>
                     <h3 class="step-title">Develop</h3>
                     <p class="step-desc">Our engineers write clean, scalable code bringing the designs to life with
                         modern technologies.</p>
                 </div>
 
-                <div class="timeline-step">
+                <div class="timeline-step reveal-right" style="transition-delay: 0.4s;">
                     <div class="step-number">04</div>
                     <h3 class="step-title">Deliver</h3>
                     <p class="step-desc">Rigorous QA testing, seamless deployment, and post-launch support to guarantee
@@ -1559,6 +1721,7 @@
             <div class="footer-top">
                 <a href="#" class="logo"><span>N</span>amo AI Digital</a>
                 <div class="footer-links">
+                    <a href="#about" class="footer-link hover-target">About</a>
                     <a href="#services" class="footer-link hover-target">Services</a>
                     <a href="#process" class="footer-link hover-target">Process</a>
                     <a href="#contact" class="footer-link hover-target">Contact Us</a>
@@ -1567,7 +1730,7 @@
             </div>
             <div class="footer-bottom">
                 <div>&copy; 2025 Namo AI Digital. All rights reserved.</div>
-                <div>Made with â¤ï¸ by Namo AI Digital</div>
+                <div>Made with ❤️ by Namo AI Digital</div>
             </div>
         </div>
     </footer>
@@ -1582,10 +1745,18 @@
             const body = document.body;
 
             // Initialize mobile state
-            if (window.innerWidth <= 1024) {
-                body.classList.add('nav-collapsed');
-                navBar.classList.add('collapsed');
+            function handleResize() {
+                if (window.matchMedia('(max-width: 1024px)').matches) {
+                    body.classList.add('nav-collapsed');
+                    navBar.classList.add('collapsed');
+                } else {
+                    body.classList.remove('nav-collapsed');
+                    navBar.classList.remove('collapsed');
+                }
             }
+
+            handleResize();
+            window.addEventListener('resize', handleResize);
 
             navToggle.addEventListener('click', () => {
                 body.classList.toggle('nav-collapsed');
@@ -1610,9 +1781,17 @@
                 const text = node.textContent;
                 if (text.trim() === '') return;
 
-                const splitText = text.split('').map((char, index) => {
-                    if (char === ' ') return ' ';
-                    return `<span class="char" style="animation-delay: ${index * 0.05}s">${char}</span>`;
+                let charIndex = 0;
+                const splitText = text.split(/(\s+)/).map(word => {
+                    if (word.trim() === '') {
+                        charIndex += word.length;
+                        return word;
+                    }
+                    return `<span style="white-space: nowrap;">` + word.split('').map(char => {
+                        const delay = charIndex * 0.05;
+                        charIndex++;
+                        return `<span class="char" style="animation-delay: ${delay}s">${char}</span>`;
+                    }).join('') + `</span>`;
                 }).join('');
 
                 const tempDiv = document.createElement('div');
@@ -1631,8 +1810,17 @@
             const gradientSpan = headline.querySelector('.text-gradient');
             if (gradientSpan) {
                 const spanText = gradientSpan.textContent;
-                const splitSpan = spanText.split('').map((char, index) => {
-                    return `<span class="char" style="animation-delay: ${(index * 0.05) + 0.5}s">${char}</span>`;
+                let charIndex = 0;
+                const splitSpan = spanText.split(/(\s+)/).map(word => {
+                    if (word.trim() === '') {
+                        charIndex += word.length;
+                        return word;
+                    }
+                    return `<span style="white-space: nowrap;">` + word.split('').map(char => {
+                        const delay = (charIndex * 0.05) + 0.5;
+                        charIndex++;
+                        return `<span class="char" style="animation-delay: ${delay}s">${char}</span>`;
+                    }).join('') + `</span>`;
                 }).join('');
                 gradientSpan.innerHTML = splitSpan;
             }
@@ -1711,23 +1899,13 @@
                 threshold: 0.15
             };
 
-            const observer = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('active');
-
-                        // Handle Timeline Line specific case
-                        if (entry.target.id === 'timeline') {
-                            setTimeout(() => {
-                                document.getElementById('timeline-line').style.width = '100%';
-                                if (window.innerWidth <= 1024) {
-                                    document.getElementById('timeline-line').style.width = '2px';
-                                    document.getElementById('timeline-line').style.height = '100%';
-                                }
-                            }, 500);
-                        }
-
-                        observer.unobserve(entry.target);
+                    } else if (entry.boundingClientRect.top > 0) {
+                        // Remove active class to allow re-trigger on scroll ONLY when scrolling back above
+                        entry.target.classList.remove('active');
                     }
                 });
             }, observerOptions);
@@ -1759,28 +1937,44 @@
             });
 
             // 7. COUNTER UP ANIMATION
-            const counterObserver = new IntersectionObserver((entries, observer) => {
+            const counterObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const counters = entry.target.querySelectorAll('.counter');
                         counters.forEach(counter => {
+                            if (counter.animationComplete) return;
+
                             const target = +counter.getAttribute('data-target');
                             const duration = 2000; // ms
                             const step = target / (duration / 16); // 60fps
                             let current = 0;
 
+                            if (counter.animationId) {
+                                cancelAnimationFrame(counter.animationId);
+                            }
+
                             const updateCounter = () => {
                                 current += step;
                                 if (current < target) {
                                     counter.innerText = Math.ceil(current);
-                                    requestAnimationFrame(updateCounter);
+                                    counter.animationId = requestAnimationFrame(updateCounter);
                                 } else {
                                     counter.innerText = target;
+                                    counter.animationComplete = true;
                                 }
                             };
                             updateCounter();
                         });
-                        observer.unobserve(entry.target);
+                    } else if (entry.boundingClientRect.top > 0) {
+                        // Reset counters to 0 to re-trigger on next scroll ONLY when scrolling back above
+                        const counters = entry.target.querySelectorAll('.counter');
+                        counters.forEach(counter => {
+                            counter.animationComplete = false;
+                            if (counter.animationId) {
+                                cancelAnimationFrame(counter.animationId);
+                            }
+                            counter.innerText = '0';
+                        });
                     }
                 });
             }, { threshold: 0.5 });
