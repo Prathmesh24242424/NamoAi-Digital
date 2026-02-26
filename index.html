@@ -160,12 +160,13 @@
             transform: translate(-50%, -50%);
             z-index: 10000;
             pointer-events: none;
+            mix-blend-mode: difference;
         }
 
         .cursor-trail {
             width: 40px;
             height: 40px;
-            border: 1px solid var(--text-primary);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
             border-radius: 50%;
             position: fixed;
             top: 0;
@@ -174,14 +175,15 @@
             z-index: 9999;
             pointer-events: none;
             transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
         }
 
         .cursor-trail.hover-magnet {
-            width: 60px;
-            height: 60px;
-            border-color: var(--primary-accent);
-            background-color: rgba(229, 231, 235, 0.1);
-            mix-blend-mode: screen;
+            width: 80px;
+            height: 80px;
+            border-color: transparent;
+            background-color: rgba(255, 255, 255, 1);
+            mix-blend-mode: difference;
         }
 
         /* Scroll Progress */
@@ -597,6 +599,281 @@
 
             100% {
                 transform: perspective(800px) rotateX(45deg) rotateY(360deg) rotateZ(360deg);
+            }
+        }
+
+        /* 3D Minimal & Sleek Android Animation */
+        .robot-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1500px;
+            transform-style: preserve-3d;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 20px;
+            background: radial-gradient(circle at center, rgba(5, 5, 12, 0.9) 0%, rgba(0, 0, 0, 1) 100%);
+            transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .robot-container::after {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background-image:
+                radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.3), transparent),
+                radial-gradient(1.5px 1.5px at 70% 60%, rgba(255, 255, 255, 0.2), transparent);
+            background-size: 150px 150px;
+            animation: driftDust 20s linear infinite;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        @keyframes driftDust {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(-100px) translateX(-30px);
+            }
+        }
+
+        .robot-wrapper {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: levitateSmooth 4s ease-in-out infinite alternate;
+            z-index: 10;
+        }
+
+        @keyframes levitateSmooth {
+            0% {
+                transform: translateY(-15px) rotateX(2deg);
+            }
+
+            100% {
+                transform: translateY(15px) rotateX(-2deg);
+            }
+        }
+
+        .android-head {
+            width: 160px;
+            height: 110px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 200, 0.8));
+            border-radius: 50% 50% 60% 60% / 40% 40% 60% 60%;
+            position: relative;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 5px 15px rgba(255, 255, 255, 1), inset 0 -10px 20px rgba(100, 100, 100, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3;
+            margin: 0 auto;
+        }
+
+        .glass-visor {
+            width: 130px;
+            height: 35px;
+            background: #020205;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 15px #000, 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .visor-scanner {
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 1), transparent);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+            position: absolute;
+            left: -30px;
+            animation: scanVisor 3s ease-in-out infinite;
+        }
+
+        @keyframes scanVisor {
+
+            0%,
+            10% {
+                left: -30px;
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            90%,
+            100% {
+                left: 130px;
+                opacity: 0;
+            }
+        }
+
+        .neck-joint {
+            width: 50px;
+            height: 8px;
+            background: #333;
+            border-radius: 10px;
+            margin: 6px auto;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            animation: pulseGlow 4s infinite alternate;
+        }
+
+        .neck-joint.small {
+            width: 35px;
+            height: 6px;
+            margin: 4px auto 10px;
+        }
+
+        .android-chassis {
+            width: 140px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(230, 230, 230, 0.8), rgba(150, 150, 150, 0.6));
+            border-radius: 40px 40px 60px 60%;
+            position: relative;
+            margin: 0 auto;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6), inset 0 5px 15px rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .core-glow {
+            width: 40px;
+            height: 40px;
+            background: rgba(59, 130, 246, 0.2);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.8), inset 0 0 20px rgba(255, 255, 255, 0.9);
+            animation: breatheCore 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes breatheCore {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        .floating-hand {
+            width: 45px;
+            height: 65px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(200, 200, 200, 0.7));
+            border-radius: 20px;
+            position: absolute;
+            z-index: 4;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), inset 0 3px 8px #fff;
+        }
+
+        .floating-hand.left-hand {
+            left: -50px;
+            top: 130px;
+            animation: floatLeftHand 5s ease-in-out infinite alternate;
+        }
+
+        .floating-hand.right-hand {
+            right: -60px;
+            top: 80px;
+            animation: elegantWave 4s ease-in-out infinite;
+            transform-origin: bottom center;
+        }
+
+        @keyframes floatLeftHand {
+            0% {
+                transform: translateY(0) rotate(15deg);
+            }
+
+            100% {
+                transform: translateY(-15px) rotate(5deg);
+            }
+        }
+
+        @keyframes elegantWave {
+
+            0%,
+            100% {
+                transform: rotate(-10deg) translateY(0);
+            }
+
+            50% {
+                transform: rotate(15deg) translateY(-8px);
+            }
+        }
+
+        .elegant-hi {
+            position: absolute;
+            top: -30px;
+            right: -130px;
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+            animation: smoothFade 4s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 20;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.6);
+            padding-bottom: 5px;
+        }
+
+        @keyframes smoothFade {
+            0% {
+                opacity: 0.4;
+                transform: translateY(5px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(-5px);
+            }
+        }
+
+        .ambient-ring {
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotateX(60deg);
+            animation: rotateAmbient 15s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ambient-ring-2 {
+            width: 500px;
+            height: 500px;
+            border: 1px dashed rgba(255, 255, 255, 0.03);
+            animation: rotateAmbient 25s linear infinite reverse;
+        }
+
+        @keyframes rotateAmbient {
+            0% {
+                transform: translate(-50%, -50%) rotateX(65deg) rotateZ(0deg);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) rotateX(65deg) rotateZ(360deg);
             }
         }
 
@@ -1373,8 +1650,35 @@
         <div class="container about-container">
             <div class="about-image reveal-left">
                 <div class="glass-panel about-img-wrapper tilt-card hover-target" style="padding: 0;">
-                    <img src="about-image.png" alt="Namo AI Digital Development Workspace"
-                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 20px; z-index: 1;">
+                    <div class="robot-container" id="interactive-core">
+                        <!-- Subtle ambient energy rings -->
+                        <div class="ambient-ring"></div>
+                        <div class="ambient-ring ambient-ring-2"></div>
+
+                        <div class="robot-wrapper">
+                            <!-- Monolithic floating android head -->
+                            <div class="android-head">
+                                <div class="glass-visor">
+                                    <div class="visor-scanner"></div>
+                                </div>
+                            </div>
+
+                            <!-- Floating geometric neck joints -->
+                            <div class="neck-joint"></div>
+                            <div class="neck-joint small"></div>
+
+                            <!-- Sleek minimal chassis -->
+                            <div class="android-chassis">
+                                <div class="core-glow"></div>
+                            </div>
+
+                            <!-- Floating elegant hand for waving -->
+                            <div class="floating-hand right-hand"></div>
+                            <div class="floating-hand left-hand"></div>
+
+                            <div class="elegant-hi">Hello.</div>
+                        </div>
+                    </div>
                     <div class="about-badge">
                         <span class="text-gradient"
                             style="font-size: 2rem; font-weight: 800; font-family: var(--font-display);">5+</span><br>
@@ -2075,6 +2379,27 @@
                     initParticles();
                 }, 200);
             });
+            // 9. INTERACTIVE 3D CORE IN ABOUT SECTION
+            const aboutWrapper = document.querySelector('.about-img-wrapper');
+            const interactiveCore = document.getElementById('interactive-core');
+
+            if (aboutWrapper && interactiveCore) {
+                aboutWrapper.addEventListener('mousemove', (e) => {
+                    const rect = aboutWrapper.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+
+                    // Multiply for intensity of rotation
+                    const rotateX = (y / (rect.height / 2)) * -25;
+                    const rotateY = (x / (rect.width / 2)) * 25;
+
+                    interactiveCore.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+
+                aboutWrapper.addEventListener('mouseleave', () => {
+                    interactiveCore.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                });
+            }
         });
     </script>
 </body>
