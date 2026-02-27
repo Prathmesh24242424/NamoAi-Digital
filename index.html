@@ -34,6 +34,10 @@
 </head>
 
 <body>
+    <!-- Global Background Video -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="images/Black_and_White_Blackhole_Background_Video.mp4" type="video/mp4">
+    </video>
 
     <!-- Scroll Progress -->
     <div id="scroll-progress"></div>
@@ -60,16 +64,11 @@
 
     <!-- HERO SECTION -->
     <section id="home">
+        <canvas id="particle-canvas"></canvas>
         <div class="hero-bg-grid"></div>
-        <div class="hero-orbs">
-            <div class="hero-orb-1"></div>
-            <div class="hero-orb-2"></div>
-        </div>
 
-        <div class="container relative z-10" style="display: flex; justify-content: center;">
+        <div class="container relative z-10">
             <div class="hero-content">
-                <div class="badge" style="animation: fadeInSlideUp 0.8s ease forwards;">🚀 The Future of Digital
-                    Products</div>
                 <h1 class="hero-title" id="animated-headline">
                     We Build Digital<br>
                     Experiences That<br>
@@ -85,18 +84,6 @@
             </div>
         </div>
     </section>
-
-    <!-- AUTOMATIC SCROLLING INFINITE MARQUEE -->
-    <div class="marquee-container">
-        <div class="marquee-content">
-            <h2>Digital <span>Agility</span> Limitless <span>Innovation</span> Extreme <span>Performance</span> Code
-                <span>Aesthetics</span> Radical <span>Growth</span>
-            </h2>
-            <h2>Digital <span>Agility</span> Limitless <span>Innovation</span> Extreme <span>Performance</span> Code
-                <span>Aesthetics</span> Radical <span>Growth</span>
-            </h2>
-        </div>
-    </div>
     <!-- ABOUT SECTION -->
     <section id="about" class="section-padding">
         <div class="container about-container">
@@ -179,7 +166,7 @@
 
             <div class="services-grid">
                 <!-- Service 1 -->
-                <div class="service-card spotlight-card hover-target tilt-card reveal" style="transition-delay: 0.1s;">
+                <div class="service-card glass-panel hover-target tilt-card reveal" style="transition-delay: 0.1s;">
                     <div class="service-icon">🌐</div>
                     <h3 class="service-title">Website Development</h3>
                     <p class="service-desc">Lightning-fast, SEO-optimized, pixel-perfect websites built on modern tech
@@ -190,7 +177,7 @@
                 </div>
 
                 <!-- Service 2 -->
-                <div class="service-card spotlight-card hover-target tilt-card reveal" style="transition-delay: 0.2s;">
+                <div class="service-card glass-panel hover-target tilt-card reveal" style="transition-delay: 0.2s;">
                     <div class="service-icon">📱</div>
                     <h3 class="service-title">App Development</h3>
                     <p class="service-desc">Native iOS & Android apps built for scale and speed. We turn complex ideas
@@ -201,7 +188,7 @@
                 </div>
 
                 <!-- Service 3 -->
-                <div class="service-card spotlight-card hover-target tilt-card reveal" style="transition-delay: 0.3s;">
+                <div class="service-card glass-panel hover-target tilt-card reveal" style="transition-delay: 0.3s;">
                     <div class="service-icon">📈</div>
                     <h3 class="service-title">Digital Marketing</h3>
                     <p class="service-desc">Data-driven performance marketing campaigns that maximize ROI, capture
@@ -212,7 +199,7 @@
                 </div>
 
                 <!-- Service 4 -->
-                <div class="service-card spotlight-card hover-target tilt-card reveal" style="transition-delay: 0.4s;">
+                <div class="service-card glass-panel hover-target tilt-card reveal" style="transition-delay: 0.4s;">
                     <div class="service-icon">📣</div>
                     <h3 class="service-title">Social Media Management</h3>
                     <p class="service-desc">Engaging social content strategies that build communities, amplify brand
@@ -232,28 +219,28 @@
                 <h2 class="why-title">We Don't Just<br>Deliver.<br><span class="text-gradient">We Dominate.</span></h2>
             </div>
             <div class="why-right">
-                <div class="feature-row spotlight-card reveal-right" style="transition-delay: 0.1s;">
+                <div class="feature-row reveal-right" style="transition-delay: 0.1s;">
                     <div class="feature-icon">⚡</div>
                     <div class="feature-content">
                         <h4>Blazing Speed</h4>
                         <p>Performance optimized architectures ensuring lightning fast load times across devices.</p>
                     </div>
                 </div>
-                <div class="feature-row spotlight-card reveal-right" style="transition-delay: 0.2s;">
+                <div class="feature-row reveal-right" style="transition-delay: 0.2s;">
                     <div class="feature-icon">🏆</div>
                     <div class="feature-content">
                         <h4>Premium Quality</h4>
                         <p>Award-winning design aesthetics combined with robust, error-free engineering.</p>
                     </div>
                 </div>
-                <div class="feature-row spotlight-card reveal-right" style="transition-delay: 0.3s;">
+                <div class="feature-row reveal-right" style="transition-delay: 0.3s;">
                     <div class="feature-icon">🔒</div>
                     <div class="feature-content">
                         <h4>Secure & Scalable</h4>
                         <p>Enterprise-grade security protocols built to scale seamlessly with your growing business.</p>
                     </div>
                 </div>
-                <div class="feature-row spotlight-card reveal-right" style="transition-delay: 0.4s;">
+                <div class="feature-row reveal-right" style="transition-delay: 0.4s;">
                     <div class="feature-icon">🤝</div>
                     <div class="feature-content">
                         <h4>Dedicated Support</h4>
