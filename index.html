@@ -53,8 +53,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            cursor: none !important;
-            /* Hide default cursor */
         }
 
         html {
@@ -63,10 +61,27 @@
 
         body {
             background-color: var(--bg-color);
+            background-image: url('images/new-hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             color: var(--text-primary);
             font-family: var(--font-body);
             overflow-x: hidden;
             line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 5, 5, 0.75);
+            /* Dark overlay to protect text readability */
+            z-index: -2;
+            pointer-events: none;
         }
 
 
@@ -148,43 +163,6 @@
             list-style: none;
         }
 
-        /* Custom Cursor */
-        .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--text-primary);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            z-index: 10000;
-            pointer-events: none;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-trail {
-            width: 40px;
-            height: 40px;
-            border: 1.5px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            transform: translate(-50%, -50%);
-            z-index: 9999;
-            pointer-events: none;
-            transition: width 0.3s, height 0.3s, border-color 0.3s, background-color 0.3s;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-trail.hover-magnet {
-            width: 80px;
-            height: 80px;
-            border-color: transparent;
-            background-color: rgba(255, 255, 255, 1);
-            mix-blend-mode: difference;
-        }
 
         /* Scroll Progress */
         #scroll-progress {
@@ -1460,6 +1438,8 @@
         @media (max-width: 1024px) {
             .nav-toggle {
                 display: flex !important;
+                right: 5%;
+                transition: top 0.3s;
             }
 
             nav.collapsed {
@@ -1480,10 +1460,15 @@
                 padding: 16px 0;
             }
 
+            body.scrolled-toggles .nav-toggle {
+                top: 16px;
+            }
+
             nav:not(.collapsed) {
                 height: 100vh;
                 background: rgba(2, 2, 9, 0.98);
                 overflow-y: auto;
+                padding-top: 80px;
             }
 
             nav.collapsed .nav-links,
@@ -1500,8 +1485,12 @@
 
             .nav-container {
                 flex-direction: column;
-                align-items: center;
+                align-items: flex-start;
                 gap: 40px;
+            }
+
+            nav:not(.collapsed) .nav-container {
+                align-items: center;
             }
 
             .logo {
@@ -1512,6 +1501,7 @@
                 flex-direction: column;
                 gap: 30px;
                 align-items: center;
+                width: 100%;
             }
 
             .about-container,
@@ -1570,21 +1560,70 @@
 
             .hero-title {
                 margin-top: 40px;
+                font-size: clamp(2.5rem, 10vw, 4.5rem);
+                text-align: center;
+            }
+
+            .hero-subtitle {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .hero-cta {
                 flex-direction: column;
+                align-items: center;
+                gap: 15px;
             }
 
-            /* Hide custom cursor on mobile for better experience */
-            .cursor-dot,
-            .cursor-trail {
-                display: none;
+            .hero-cta .btn {
+                width: 100%;
+                max-width: 300px;
             }
 
-            * {
-                cursor: auto !important;
+            .section-title,
+            .why-title,
+            .about-content h2,
+            .contact-info h3 {
+                text-align: center;
             }
+
+            .about-content,
+            .contact-info {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .contact-info .info-item {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .why-title {
+                font-size: clamp(2.2rem, 8vw, 3rem);
+            }
+
+            .about-badge {
+                right: 50%;
+                transform: translateX(50%);
+                width: 80%;
+            }
+
+            .footer-top,
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+
         }
     </style>
 </head>
@@ -1593,10 +1632,6 @@
 
     <!-- Scroll Progress -->
     <div id="scroll-progress"></div>
-
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursor-dot"></div>
-    <div class="cursor-trail" id="cursor-trail"></div>
 
     <!-- Nav Toggle Button -->
     <button class="nav-toggle hover-target" id="nav-toggle">
@@ -2065,6 +2100,11 @@
             navToggle.addEventListener('click', () => {
                 body.classList.toggle('nav-collapsed');
                 navBar.classList.toggle('collapsed');
+                if (!navBar.classList.contains('collapsed')) {
+                    body.style.overflow = 'hidden';
+                } else {
+                    body.style.overflow = '';
+                }
             });
 
             // Close nav when clicking a link on mobile
@@ -2073,6 +2113,7 @@
                     if (window.innerWidth <= 1024) {
                         body.classList.add('nav-collapsed');
                         navBar.classList.add('collapsed');
+                        body.style.overflow = '';
                     }
                 });
             });
@@ -2129,41 +2170,6 @@
                 gradientSpan.innerHTML = splitSpan;
             }
 
-            // 2. CUSTOM CURSOR
-            const cursorDot = document.getElementById('cursor-dot');
-            const cursorTrail = document.getElementById('cursor-trail');
-            const hoverTargets = document.querySelectorAll('.hover-target, a, button, input, textarea, select');
-
-            let mouseX = 0;
-            let mouseY = 0;
-            let trailX = 0;
-            let trailY = 0;
-
-            document.addEventListener('mousemove', (e) => {
-                mouseX = e.clientX;
-                mouseY = e.clientY;
-                cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-            });
-
-            function animateCursor() {
-                // Easing for lag effect
-                trailX += (mouseX - trailX) * 0.15;
-                trailY += (mouseY - trailY) * 0.15;
-                cursorTrail.style.transform = `translate(${trailX}px, ${trailY}px) translate(-50%, -50%)`;
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
-
-            // Hover effects for cursor
-            hoverTargets.forEach(target => {
-                target.addEventListener('mouseenter', () => {
-                    cursorTrail.classList.add('hover-magnet');
-                });
-                target.addEventListener('mouseleave', () => {
-                    cursorTrail.classList.remove('hover-magnet');
-                });
-            });
-
             // Magnetic Buttons
             const magnetBtns = document.querySelectorAll('.magnet-btn');
             magnetBtns.forEach(btn => {
@@ -2191,8 +2197,10 @@
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50) {
                     navbar.classList.add('scrolled');
+                    document.body.classList.add('scrolled-toggles');
                 } else {
                     navbar.classList.remove('scrolled');
+                    document.body.classList.remove('scrolled-toggles');
                 }
             }, { passive: true });
 
